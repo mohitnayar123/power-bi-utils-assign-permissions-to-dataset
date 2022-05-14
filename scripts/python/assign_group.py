@@ -139,7 +139,7 @@ def assign_group_principal(access_token: str, workspace_name: str, dataset_name:
     response = requests.request("POST", url, headers=headers, data=body)
 
 
-def find_updated_datasets(file_list, cfg):
+def find_updated_datasets(file_list, folder, cfg):
     updated_datasets = {}
 
     parsed_file_list = []
@@ -149,7 +149,11 @@ def find_updated_datasets(file_list, cfg):
 
         # Ignore deleted files
         if os.path.exists(file) and len(path.parts) != 0 and file.endswith(".json") and not file.startswith("."):
-            parsed_file_list.append(file)
+            if folder:
+                if file.startswith(folder):
+                    parsed_file_list.append(file[len(folder):])
+            else:
+                parsed_file_list.append(file)
 
     for file in parsed_file_list:
         path = Path(file)
@@ -173,6 +177,7 @@ def main():
     parser.add_argument('--files', nargs=1, required=True)
     parser.add_argument('--tenant_id', nargs=1, required=True)
     parser.add_argument('--config', nargs=1, required=True)
+    parser.add_argument("--folder", nargs=1, default="")
     args = parser.parse_args()
     
     tenant_id =  args.tenant_id[0]
@@ -181,6 +186,7 @@ def main():
     print(config)
     files =  args.files[0]
     file_list = files.split(",")
+    folder = args.folder[0] if args.folder else None
    
     client_id = os.environ['CLIENT_ID']
     client_secret = os.environ['CLIENT_SECRET']
@@ -202,7 +208,7 @@ def main():
                                     client_id=client_id,
                                     client_secret=client_secret)
 
-    updated_datasets = find_updated_datasets(file_list,  cfg)
+    updated_datasets = find_updated_datasets(file_list, folder, cfg)
 
     for dataset, workspace_name in updated_datasets.items():
         group_permissions = cfg["Dataset Permissions"][workspace_name]["group_permissions"]
