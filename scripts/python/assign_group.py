@@ -2,7 +2,7 @@ import requests
 import os
 import logging
 import yaml
-import argparse
+import sys
 from pathlib import Path
 
 logging.basicConfig(level=logging.INFO)
