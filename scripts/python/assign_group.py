@@ -175,8 +175,8 @@ def main():
    
     parser = argparse.ArgumentParser(description='Personal information')
     parser.add_argument('--files', dest='files', type=str)
-    parser.add_argument('--config', dest='config_file', type=str)
     parser.add_argument('--tenant_id', dest='tenant_id', type=str)
+    parser.add_argument('--config', dest='config_file', type=str)
     parser.add_argument('--folder', dest='folder', type=str)
     args = parser.parse_args()
     
