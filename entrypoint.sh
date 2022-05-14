@@ -4,4 +4,4 @@ pip install requests
 pip install pyyaml
 pip install pathlib
 
-python /scripts/python/assign_group.py $1 $2 "$3" $4
+python /scripts/python/assign_group.py "$1" $2 $3 $4
