@@ -6,4 +6,4 @@ pip install pandas
 pip install os
 pip install logging
 
-python /scripts/python/upload_file.py $1 $2 "$3" $4
+python /scripts/python/assign_group.py $1 $2 "$3" $4
