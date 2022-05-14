@@ -9,16 +9,6 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO)
 
 
-def parse_arguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--tenant_id", nargs=1, required=True)
-    parser.add_argument("--config", nargs=1)
-    parser.add_argument("--files", nargs=1)
-    parser.add_argument("--folder", nargs=1, default="")
-    parser.add_argument("--separator", nargs=1, default=",")
-    return parser.parse_args()
-
-
 def get_access_token(tenant_id: str, client_id: str, client_secret: str) -> str:
     """
     This function takes in client id and client secrets as argments and returns an authentication token that can be used to call the Power BI Rest API.
@@ -197,12 +187,12 @@ def find_updated_datasets(file_list, folder, cfg):
 
 
 def main():
-    args = parse_arguments()
-    tenant_id = args.tenant_id[0]
-    config = args.config[0] if args.config else None
-    files = args.files[0]
-    file_list = files.split(args.separator)
-    folder = args.folder[0] if args.folder else ""
+   
+    tenant_id =  sys.argv[1]
+    config =  sys.argv[2] if sys.argv[2] else None
+    files = sys.argv[3]
+    file_list = files.split(",")
+    folder = sys.argv[4] if sys.argv[4] else ""
     client_id = os.environ['CLIENT_ID']
     client_secret = os.environ['CLIENT_SECRET']
 
