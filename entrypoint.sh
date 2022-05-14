@@ -1,3 +1,4 @@
+#!/bin/sh
 pip install --upgrade pip
 pip install requests
 pip install pyyaml
