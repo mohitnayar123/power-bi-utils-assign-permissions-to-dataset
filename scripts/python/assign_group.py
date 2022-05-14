@@ -172,13 +172,20 @@ def find_updated_datasets(file_list, folder, cfg):
 
 def main():
    
-    tenant_id =  sys.argv[2]
+    parser = argparse.ArgumentParser(description='Personal information')
+    parser.add_argument('--files', dest='files', type=str)
+    parser.add_argument('--config', dest='config_file', type=str)
+    parser.add_argument('--tenant_id', dest='tenant_id', type=str)
+    parser.add_argument('--folder', dest='folder', type=str)
+    args = parser.parse_args()
+    
+    tenant_id =  args.tenant_id
     print(tenant_id)
-    config =  sys.argv[3]
+    config =   args.config
     print(config)
-    files = sys.argv[1]
+    files =  args.files
     file_list = files.split(",")
-    folder = sys.argv[4] if sys.argv[4] else ""
+    folder = args.folder if args.folder else ""
     client_id = os.environ['CLIENT_ID']
     client_secret = os.environ['CLIENT_SECRET']
     
