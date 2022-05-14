@@ -6,13 +6,13 @@ inputs:
     description: 'The id of the tenant'
     required: true
   config_file:
-    description: 'The location of the config file which has the permissions information"
+    description: 'The location of the config file which has the permissions information'
     required: true
   files:
     description: 'Files to deploy'
     required: true
   folder:
-    description: 'Folder in which all the datasets are stored"
+    description: 'Folder in which all the datasets are stored'
     required: false
 runs:
   using: 'docker'
