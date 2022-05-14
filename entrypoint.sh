@@ -4,4 +4,4 @@ pip install requests
 pip install pyyaml
 pip install pathlib
 
-python /scripts/python/assign_group.py "$1" $2 $3 $4
+python /scripts/python/assign_group.py --files "$1" --tenant_id $2 --config_file $3 --folder $4
