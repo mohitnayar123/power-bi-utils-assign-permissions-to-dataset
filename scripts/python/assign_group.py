@@ -170,14 +170,14 @@ def find_updated_datasets(file_list, cfg):
 def main():
    
     parser = argparse.ArgumentParser()
-    parser.add_argument('files',  type=str)
-    parser.add_argument('tenant_id',type=str)
-    parser.add_argument('config',  type=str)
+    parser.add_argument('--files', nargs=1, required=True)
+    parser.add_argument('--tenant_id', nargs=1, required=True)
+    parser.add_argument('--config', nargs=1, required=True)
     args = parser.parse_args()
     
-    tenant_id =  args.tenant_id
+    tenant_id =  args.tenant_id[0]
     print(tenant_id)
-    config =   args.config
+    config =   args.config[0]
     print(config)
     files =  args.files
     file_list = files.split(",")
