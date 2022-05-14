@@ -20,5 +20,5 @@ runs:
   args:
      - ${{ inputs.files }}
      - ${{ inputs.tenant_id }}
-     - ${{ inputs.config_file }}
+     - ${{ inputs.config }}
      - ${{ inputs.folder }}
