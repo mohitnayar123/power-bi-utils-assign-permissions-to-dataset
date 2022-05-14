@@ -139,7 +139,7 @@ def assign_group_principal(access_token: str, workspace_name: str, dataset_name:
     response = requests.request("POST", url, headers=headers, data=body)
 
 
-def find_updated_datasets(file_list, folder, cfg):
+def find_updated_datasets(file_list, cfg):
     updated_datasets = {}
 
     parsed_file_list = []
@@ -149,11 +149,7 @@ def find_updated_datasets(file_list, folder, cfg):
 
         # Ignore deleted files
         if os.path.exists(file) and len(path.parts) != 0 and file.endswith(".json") and not file.startswith("."):
-            if folder:
-                if file.startswith(folder):
-                    parsed_file_list.append(file[len(folder):])
-            else:
-                parsed_file_list.append(file)
+            parsed_file_list.append(file)
 
     for file in parsed_file_list:
         path = Path(file)
@@ -173,11 +169,10 @@ def find_updated_datasets(file_list, folder, cfg):
 
 def main():
    
-    parser = argparse.ArgumentParser(description='Personal information')
-    parser.add_argument('--files', dest='files', type=str)
-    parser.add_argument('--tenant_id', dest='tenant_id', type=str)
-    parser.add_argument('--config', dest='config_file', type=str)
-    parser.add_argument('--folder', dest='folder', type=str)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('files',  type=str)
+    parser.add_argument('tenant_id',type=str)
+    parser.add_argument('config',  type=str)
     args = parser.parse_args()
     
     tenant_id =  args.tenant_id
@@ -186,7 +181,7 @@ def main():
     print(config)
     files =  args.files
     file_list = files.split(",")
-    folder = args.folder if args.folder else ""
+   
     client_id = os.environ['CLIENT_ID']
     client_secret = os.environ['CLIENT_SECRET']
     
@@ -207,7 +202,7 @@ def main():
                                     client_id=client_id,
                                     client_secret=client_secret)
 
-    updated_datasets = find_updated_datasets(file_list, folder, cfg)
+    updated_datasets = find_updated_datasets(file_list,  cfg)
 
     for dataset, workspace_name in updated_datasets.items():
         group_permissions = cfg["Dataset Permissions"][workspace_name]["group_permissions"]
