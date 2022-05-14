@@ -173,22 +173,26 @@ def find_updated_datasets(file_list, folder, cfg):
 def main():
    
     tenant_id =  sys.argv[1]
+    print(tenant_id)
     config =  sys.argv[2] if sys.argv[2] else None
+    print(config)
     files = sys.argv[3]
     file_list = files.split(",")
     folder = sys.argv[4] if sys.argv[4] else ""
     client_id = os.environ['CLIENT_ID']
     client_secret = os.environ['CLIENT_SECRET']
-
+    
+    print(os.getcwd())
     if client_id is None or client_secret is None:
         raise Exception(
             "CLIENT_ID and CLIENT_SECRET environment variables must be set with credentials")
 
     if config is None:
-        raise Exception("Requires either a config file")
+        raise Exception("Requires a config file")
     else:
         with open(config, 'r') as yml_file:
             cfg = yaml.safe_load(yml_file)
+            print(cfg)
 
     # Add values for client_id, client_secret and tenant_id below
     access_token = get_access_token(tenant_id=tenant_id,
@@ -199,7 +203,6 @@ def main():
 
     for dataset, workspace_name in updated_datasets.items():
         group_permissions = cfg["Dataset Permissions"][workspace_name]["group_permissions"]
-        print(group_permissions)
         for permission, identifiers in group_permissions.items():
             for indentifier in identifiers:
                 assign_group_principal(access_token=access_token,
