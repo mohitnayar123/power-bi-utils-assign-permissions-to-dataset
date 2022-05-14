@@ -1,11 +1,9 @@
 import requests
 import os
-import logging
 import yaml
 import sys
 from pathlib import Path
 
-logging.basicConfig(level=logging.INFO)
 
 
 def get_access_token(tenant_id: str, client_id: str, client_secret: str) -> str:
@@ -37,10 +35,7 @@ def get_access_token(tenant_id: str, client_id: str, client_secret: str) -> str:
         'client_secret': client_secret,
         'response_mode': 'query'}
 
-    logging.info("Requesting access token")
     response = requests.request("GET", url, data=payload)
-    logging.info(f'Response {response}')
-    logging.info(f"Access Token {response.json().get('access_token')}")
     return f"Bearer  {response.json().get('access_token')}"
 
 
@@ -56,14 +51,11 @@ def get_workspace_id(access_token: str, workspace_name: str) -> str:
      workspace_name : str
           Unique name for a workspace
     """
-    logging.info(f"Getting workspace id for dataset:{workspace_name}")
     headers = {'Authorization': access_token}
     url = f"https://api.powerbi.com/v1.0/myorg/groups?$filter=contains(name,'{workspace_name}')"
     response = requests.request("GET", url, headers=headers)
     workspaces_json = response.json().get('value')
     workspace_id = workspaces_json[0]["id"]
-
-    logging.info(f"Workspace Id for {workspace_name} = {workspace_id}")
     return workspace_id
 
 
@@ -80,8 +72,6 @@ def get_datasets_in_workspace(access_token: str, workspace_id: str):
     """
 
     headers = {'Authorization': access_token}
-    logging.info(f"Requesting list of datasets for workspace:{workspace_id}")
-
     url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets"
 
     response = requests.request("GET", url, headers=headers)
@@ -104,13 +94,10 @@ def get_dataset_id(access_token: str, workspace_id: str, dataset_name: str) -> s
      dataset_name: str
           Name of the dataset
     """
-    logging.info(f"Getting dataset id for dataset:{dataset_name}")
     datasets_json = get_datasets_in_workspace(access_token=access_token,
                                          workspace_id=workspace_id)
 
     dataset_id = [x for x in datasets_json if x['name'] == dataset_name][0]["id"]
-
-    logging.info(f"Dataset Id for {dataset_name}:{dataset_id}")
     return dataset_id
 
 
@@ -149,8 +136,6 @@ def assign_group_principal(access_token: str, workspace_name: str, dataset_name:
         'datasetUserAccessRight': permission
     }
     response = requests.request("POST", url, headers=headers, data=body)
-    logging.info(
-        f"Identifier Id({identifier}) assigned {permission} permission to  {workspace_name}")
 
 
 def find_updated_datasets(file_list, folder, cfg):
