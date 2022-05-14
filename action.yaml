@@ -18,3 +18,4 @@ runs:
      - ${{ inputs.files }}
      - ${{ inputs.tenant_id }}
      - ${{ inputs.config }}
+     - ${{ inputs.folder }}
