@@ -5,24 +5,20 @@ inputs:
   tenant_id:
     description: 'The id of the tenant'
     required: true
-  client_id:
-    description: 'The id of the SPN'
-    required: true
-  client_secret:
-    description: 'The secret password of the SPN'
-    required: true
   config_file:
     description: 'The location of the config file which has the permissions information"
     required: true
   files:
     description: 'Files to deploy'
     required: true
+  folder:
+    description: 'Folder in which all the datasets are stored"
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
      - ${{ inputs.files }}
-     - ${{ inputs.client_secret }}
-     - ${{ inputs.client_id }}
      - ${{ inputs.tenant_id }}
      - ${{ inputs.config_file }}
+     - ${{ inputs.folder }}
