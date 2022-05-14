@@ -179,7 +179,7 @@ def main():
     print(tenant_id)
     config =   args.config[0]
     print(config)
-    files =  args.files
+    files =  args.files[0]
     file_list = files.split(",")
    
     client_id = os.environ['CLIENT_ID']
