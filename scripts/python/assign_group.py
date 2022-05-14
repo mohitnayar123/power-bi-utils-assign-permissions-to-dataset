@@ -1,5 +1,4 @@
 import requests
-import pandas as pd
 import os
 import logging
 import yaml
@@ -61,8 +60,8 @@ def get_workspace_id(access_token: str, workspace_name: str) -> str:
     headers = {'Authorization': access_token}
     url = f"https://api.powerbi.com/v1.0/myorg/groups?$filter=contains(name,'{workspace_name}')"
     response = requests.request("GET", url, headers=headers)
-    workspaces = pd.DataFrame(response.json().get('value'))
-    workspace_id = workspaces[workspaces.name == workspace_name]["id"].iloc[0]
+    workspaces_json = response.json().get('value')
+    workspace_id = workspaces_json[0]["id"]
 
     logging.info(f"Workspace Id for {workspace_name} = {workspace_id}")
     return workspace_id
@@ -86,9 +85,9 @@ def get_datasets_in_workspace(access_token: str, workspace_id: str):
     url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets"
 
     response = requests.request("GET", url, headers=headers)
-    datasets = pd.DataFrame(response.json().get('value'))
+    datasets_json = response.json().get('value')
 
-    return datasets
+    return datasets_json
 
 
 def get_dataset_id(access_token: str, workspace_id: str, dataset_name: str) -> str:
@@ -106,10 +105,10 @@ def get_dataset_id(access_token: str, workspace_id: str, dataset_name: str) -> s
           Name of the dataset
     """
     logging.info(f"Getting dataset id for dataset:{dataset_name}")
-    datasets = get_datasets_in_workspace(access_token=access_token,
+    datasets_json = get_datasets_in_workspace(access_token=access_token,
                                          workspace_id=workspace_id)
 
-    dataset_id = datasets[datasets.name == dataset_name]["id"].iloc[0]
+    dataset_id = [x for x in datasets_json if x['name'] == dataset_name][0]["id"]
 
     logging.info(f"Dataset Id for {dataset_name}:{dataset_id}")
     return dataset_id
