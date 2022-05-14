@@ -172,11 +172,11 @@ def find_updated_datasets(file_list, folder, cfg):
 
 def main():
    
-    tenant_id =  sys.argv[1]
+    tenant_id =  sys.argv[2]
     print(tenant_id)
-    config =  sys.argv[2] if sys.argv[2] else None
+    config =  sys.argv[3]
     print(config)
-    files = sys.argv[3]
+    files = sys.argv[1]
     file_list = files.split(",")
     folder = sys.argv[4] if sys.argv[4] else ""
     client_id = os.environ['CLIENT_ID']
