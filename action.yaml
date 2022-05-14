@@ -11,9 +11,6 @@ inputs:
   files:
     description: 'Files to deploy'
     required: true
-  folder:
-    description: 'Folder in which all the datasets are stored'
-    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -21,4 +18,3 @@ runs:
      - ${{ inputs.files }}
      - ${{ inputs.tenant_id }}
      - ${{ inputs.config }}
-     - ${{ inputs.folder }}
