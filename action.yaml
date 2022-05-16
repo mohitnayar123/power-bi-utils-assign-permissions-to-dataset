@@ -14,6 +14,9 @@ inputs:
   files:
     description: 'Files to deploy'
     required: true
+  folder:
+    description: 'Folder in which the datasets are stored'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
