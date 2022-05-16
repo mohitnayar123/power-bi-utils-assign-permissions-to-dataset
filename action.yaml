@@ -1,6 +1,9 @@
 name: 'Assign Azure AD Group to a Power BI Dataset'
 description: 'Assign an Azure AD Group to a Power BI Dataset'
 author: 'Mohit Nayar'
+branding:
+  icon: 'lock'  
+  color: 'yellow'
 inputs:
   tenant_id:
     description: 'The id of the tenant'
