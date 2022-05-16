@@ -8,7 +8,7 @@ inputs:
   tenant_id:
     description: 'The id of the tenant'
     required: true
-  config_file:
+  config:
     description: 'The location of the config file which has the permissions information'
     required: true
   files:
