@@ -211,15 +211,17 @@ def main():
     updated_datasets = find_updated_datasets(file_list, folder, cfg)
 
     for dataset, workspace_name in updated_datasets.items():
-        if bool(cfg["Dataset Permissions"][workspace_name]["group_permissions"]):
-            group_permissions = cfg["Dataset Permissions"][workspace_name]["group_permissions"]
-            for permission, identifiers in group_permissions.items():
-                for indentifier in identifiers:
-                    assign_group_principal(access_token=access_token,
-                                           workspace_name=workspace_name,
-                                           dataset_name=dataset,
-                                           identifier=indentifier,
-                                           permission=permission)
+        if "Dataset Permissions" in cfg.keys():
+            if workspace_name in cfg["Dataset Permissions"].keys():
+                if "group_permissions" in cfg["Dataset Permissions"][workspace_name].keys():
+                    group_permissions = cfg["Dataset Permissions"][workspace_name]["group_permissions"]
+                    for permission, identifiers in group_permissions.items():
+                        for indentifier in identifiers:
+                            assign_group_principal(access_token=access_token,
+                                                   workspace_name=workspace_name,
+                                                   dataset_name=dataset,
+                                                   identifier=indentifier,
+                                                   permission=permission)
 
 
 if __name__ == '__main__':
