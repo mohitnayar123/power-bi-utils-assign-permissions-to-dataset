@@ -211,7 +211,7 @@ def main():
     updated_datasets = find_updated_datasets(file_list, folder, cfg)
 
     for dataset, workspace_name in updated_datasets.items():
-        if cfg["Dataset Permissions"][workspace_name]["group_permissions"]:
+        if bool(cfg["Dataset Permissions"][workspace_name]["group_permissions"]):
             group_permissions = cfg["Dataset Permissions"][workspace_name]["group_permissions"]
             for permission, identifiers in group_permissions.items():
                 for indentifier in identifiers:
