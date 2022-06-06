@@ -30,7 +30,6 @@ def get_access_token(tenant_id: str, client_id: str, client_secret: str) -> str:
 
     payload = {
         'grant_type': 'client_credentials',
-        'scope': 'oauth',
         'resource': 'https://analysis.windows.net/powerbi/api',
         'client_id': client_id,
         'client_secret': client_secret,
